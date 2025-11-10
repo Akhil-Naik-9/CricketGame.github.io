@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="CricketGame.css">
+<head>
+    
+    <title>Cricket Game</title>
+    
+</head>
+
+<body>
+   <button class="toggle-btn" id="modeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    <h1>Bat Ball Stump Game</h1>
+    <button onclick="
+    let computerChoice = generateComputerChoice();
+    let resultMsg=getResult('Bat', computerChoice);
+    showResult('Bat',computerChoice,resultMsg);
+    "
+    ><img src="bat.jpeg" style="height: 40px;" alt="Bat"></button>
+    
+    <button onclick="
+    computerChoice = generateComputerChoice();
+     resultMsg=getResult('Ball', computerChoice);
+    showResult('Ball',computerChoice,resultMsg);
+    "
+    ><img src="ball.jpeg"  style="height: 40px;"alt="Ball"></button>
+    
+    <button onclick="
+     computerChoice = generateComputerChoice();
+     resultMsg=getResult('Stump', computerChoice);
+    showResult('Stump',computerChoice,resultMsg);
+    "
+    ><img src="wicket.jpeg"  style="height: 40px;"alt="stumps"></button>
+    <h3 id="user-move"></h3>
+    <h3 id="computer-move"></h3>
+    <h3 id="result"></h3>
+    <h3 id="score"></h3>
+   
+    <button class= "reset"onclick="
+    localStorage.clear();
+    resetScore();
+    ">Refresh</button>
+    <br>
+    
+    
+<script>
+        let scoreStr= localStorage.getItem('Score');
+        let score;
+        resetScore(scoreStr);
+        function resetScore(scoreStr){
+         score = scoreStr ? JSON.parse(scoreStr) :  {
+            win :0,
+            lost:0,
+            tie:0,     
+        };
+    
+           score.displayScore = function(){
+                return `Won:${score.win}, Lost:${score.lost}, Tie:${score.tie}`;
+                
+            };
+            showResult();
+    }
+ 
+        
+        function generateComputerChoice(){
+            let randomNumber = Math.random()*3;
+            if(randomNumber>0&& randomNumber<=1){
+                return 'Bat';
+            }else if(randomNumber>1&&randomNumber<=2){
+                return 'Ball';
+            }else{
+                return 'Stump';   
+            }
+        }
+        function getResult(userMove , computerMove){
+            if(userMove==='Bat'){
+                if(computerMove==='Ball'){
+                    score.win ++; 
+                    return 'User Won.';
+                }else if(computerMove==='Stump'){
+                    score.lost++;
+                    return 'Computer has Won';
+                }else if(computerMove==='Bat'){
+                    score.tie++;
+                    return 'Its a tie';
+                }
+            }
+             if(userMove==='Ball'){
+                if(computerMove==='Ball'){
+                    score.tie++;
+                    return 'Its a tie.';
+                }else if(computerMove==='Bat'){
+                    score.lost++;
+                    return 'Computer has Won';
+                }else if(computerMove==='Stump'){
+                    score.win++;
+                    return 'User won';
+                }
+            }
+             if(userMove==='Stump'){
+                if(computerMove==='Ball'){
+                    score.lost++;
+                    return 'Computer has won.';
+                }else if(computerMove==='Bat'){
+                    score.win++;
+                    return 'User Won';
+                }else if(computerMove==='Stump'){
+                    score.tie++;
+                    return 'Its a tie';
+                }
+            }
+        }
+        function showResult(userMove,computerMove,result){
+            localStorage.setItem('Score', JSON.stringify(score));
+
+            
+
+            document.querySelector('#user-move').innerText = userMove!== undefined ? `User have chosen ${userMove}`: '';
+
+            document.querySelector('#computer-move').innerText = computerMove!== undefined ? `Computer have chosen ${computerMove}`: '';
+
+            document.querySelector('#result').innerText = result||'';
+            
+            document.querySelector('#score').innerText = score.displayScore();
+            //console.log(score);
+
+          
+        }
+         function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById("modeBtn");
+
+      body.classList.toggle("dark");
+
+      
+      btn.textContent = body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+body{
+            text-align: center;
+
+        } 
+button{
+    border-color: white;
+    /* height: 60px; */
+    border-radius:12px;
+    border-color: rgb(247, 70, 70);
+    border: none;
+}
+.reset{
+    width: 
+    90px;
+    height: 30px;
+    /* border-color: rgb(70, 247, 73); */
+    background-color: rgb(108, 240, 108);
+    
+}
+ body.dark {
+      background: #060505;
+      color: #fcf8f8;
+    }
+     .toggle-btn {
+        position: relative;
+        /* text-align: justify; */
+        justify-content: end;
+      padding: 10px 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      background: #f5f3f3;  /*  dark light mode button */
+      color: #060505;
+      transition: 0.3s;
+    }
+      body.dark .toggle-btn {
+      background: #060505;  /* light mode button */
+      color: #ffffff;
+      
+    }
